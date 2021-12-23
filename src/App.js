@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
+import { Route, Link, Routes} from "react-router-dom";
+import Home from "./components/Home";
+import Register from './components/Register'
+import Login from './components/Login'
+import DashBoard from './components/Dashboard'
 
-function App() {
+
+const intialFormValues = {
+  username: '',
+  password: '',
+  phone: '',
+}
+
+export default function App() {
+
+  const [ formValues, setFormValues ] = useState(intialFormValues)
+
+  const formChange = (name,value) => {
+    setFormValues({...formValues, [name]: value})
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div>
+        <h1>Water My Plants </h1>
+        <h3>Never forget to feed your plants again!</h3>
+      
+        <Link to='/'></Link>
+
+        <Routes>
+        <Route exact path='/'>
+          <Home/>
+        </Route>
+
+        <Route path='/dashboard'>
+          <DashBoard />
+        </Route>
+
+        <Route exact path='/register'>
+          <Register
+            formChange={formChange}
+            values={formValues} />
+        </Route>
+
+        <Route exact path='/login'>
+          <Login/>
+        </Route>
+      </Routes>
+
+      </div>
     </div>
   );
 }
-
-export default App;
